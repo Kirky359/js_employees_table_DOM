@@ -104,22 +104,23 @@ const sortBy = (method, direction) => {
   rows.forEach((row) => body.appendChild(row));
 };
 
-const allTr = document.querySelectorAll('tbody tr');
 
-allTr.forEach((t) => {
-  t.addEventListener('click', () => {
-    if (t === allTr[0]) {
-      return;
-    }
+const tbody = document.querySelector('tbody');
 
-    if (t.classList.contains('active')) {
-      t.classList.remove('active');
+tbody.addEventListener('click', (e) => {
+  const row = e.target.closest('tr');
 
-      return;
-    }
+  if (!row) {
+    return;
+  }
 
-    allTr.forEach((r) => r.classList.remove('active'));
+  if (row.classList.contains('active')) {
+    row.classList.remove('active');
 
-    t.classList.add('active');
-  });
+    return;
+  }
+
+  tbody.querySelectorAll('tr').forEach((r) => r.classList.remove('active'));
+  row.classList.add('active');
 });
+
