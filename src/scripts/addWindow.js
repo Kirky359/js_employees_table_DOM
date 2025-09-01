@@ -48,7 +48,6 @@ firstTr.querySelectorAll('th').forEach((el) => {
     }
 
     inputForm.name = el.textContent.toLocaleLowerCase();
-    label.appendChild(inputForm);
   }
   inputForm.required = true;
   inputForm.dataset.qa = el.textContent.toLowerCase();

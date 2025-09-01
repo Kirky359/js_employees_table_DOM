@@ -6,17 +6,22 @@
 
 const tr = document.querySelector('tr');
 
-tr.querySelectorAll('th').forEach((th) => {
-  th.className = th.textContent.toLowerCase();
+let lastSortedColumn = null;
+
+tr.querySelectorAll('th').forEach((th, index) => {
   th.style.cursor = 'pointer';
 
   th.addEventListener('click', () => {
-    const currentDir = th.dataset.sortDir === 'asc' ? 'asc' : 'desc';
-    const newDir = currentDir === 'asc' ? 'desc' : 'asc';
+    let direction = 'asc';
 
-    th.dataset.sortDir = newDir;
+    if (lastSortedColumn === index) {
+      direction = th.dataset.sortDir === 'asc' ? 'desc' : 'asc';
+    }
 
-    sortBy(th.textContent, newDir);
+    th.dataset.sortDir = direction;
+    lastSortedColumn = index;
+
+    sortBy(th.textContent, direction);
   });
 });
 
@@ -99,7 +104,7 @@ const sortBy = (method, direction) => {
   rows.forEach((row) => body.appendChild(row));
 };
 
-const allTr = document.querySelectorAll('tr');
+const allTr = document.querySelectorAll('tbody tr');
 
 allTr.forEach((t) => {
   t.addEventListener('click', () => {
